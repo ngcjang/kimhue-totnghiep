@@ -255,6 +255,24 @@
   .reveal { opacity: 0; transform: translateY(14px); transition: opacity .8s ease, transform .8s ease; }
   .reveal.in { opacity: 1; transform: none; }
 
+  /* music toggle */
+  .music-btn {
+    position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 25;
+    width: 46px; height: 46px; border-radius: 50%;
+    border: 1px solid rgba(217,171,63,.75);
+    background: rgba(255,253,247,.92); color: var(--blue);
+    box-shadow: 0 8px 20px -10px rgba(34,56,95,.6);
+    display: none; place-items: center; cursor: pointer;
+  }
+  .opened .music-btn { display: grid; }
+  .music-btn svg { width: 20px; height: 20px; }
+  .music-btn.playing svg { animation: spin 5s linear infinite; }
+  .music-btn:not(.playing)::after {
+    content: ""; position: absolute; width: 26px; height: 1.6px; background: var(--blue);
+    transform: rotate(-45deg); border-radius: 2px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
   @media (prefers-reduced-motion: reduce) {
     .petals { display: none; }
     .name, .intro-hint { animation: none; }
@@ -339,6 +357,11 @@
 </svg>
 
 <div class="petals" id="petals" aria-hidden="true"></div>
+
+<audio id="music" src="vo-tay.mp3" preload="auto"></audio>
+<button class="music-btn" id="musicBtn" aria-label="Bật nhạc">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+</button>
 
 <!-- ======= envelope intro ======= -->
 <div class="intro" id="intro">
@@ -451,9 +474,34 @@
     if (document.body.classList.contains("opened")) return;
     intro.classList.add("gone");
     document.body.classList.add("opened");
+    playMusic();
     setTimeout(revealCheck, 600);
   }
   document.getElementById("envelope").addEventListener("click", openCard);
+
+  // Music: starts at 0:50 when the envelope is opened (needs that tap for autoplay)
+  var MUSIC_START = 50;
+  var music = document.getElementById("music");
+  var musicBtn = document.getElementById("musicBtn");
+  function playMusic() {
+    try { if (music.currentTime < MUSIC_START) music.currentTime = MUSIC_START; } catch (e) {}
+    var p = music.play();
+    if (p && p.catch) p.catch(function () { musicBtn.classList.remove("playing"); });
+  }
+  // some phones ignore the seek before the file has loaded → seek again once it plays
+  music.addEventListener("playing", function () {
+    if (music.currentTime < MUSIC_START - 1) music.currentTime = MUSIC_START;
+    musicBtn.classList.add("playing");
+    musicBtn.setAttribute("aria-label", "Tắt nhạc");
+  });
+  music.addEventListener("pause", function () {
+    musicBtn.classList.remove("playing");
+    musicBtn.setAttribute("aria-label", "Bật nhạc");
+  });
+  music.addEventListener("ended", function () { music.currentTime = MUSIC_START; music.play(); });
+  musicBtn.addEventListener("click", function () {
+    if (music.paused) playMusic(); else music.pause();
+  });
 
   // Scroll reveal
   var reveals = [].slice.call(document.querySelectorAll(".reveal"));
