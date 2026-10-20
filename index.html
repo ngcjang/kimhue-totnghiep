@@ -460,6 +460,11 @@
   // Guest name from ?to=  (textContent → never interpreted as HTML)
   (function () {
     var name = new URLSearchParams(location.search).get("to");
+    // links re-shared through Zalo/iMessage can arrive encoded twice ("%2520") → decode until stable
+    for (var i = 0; name && i < 3 && /%[0-9a-f]{2}/i.test(name); i++) {
+      try { name = decodeURIComponent(name.replace(/\+/g, " ")); } catch (e) { break; }
+    }
+    if (name) name = name.replace(/\+/g, " ").replace(/\s+/g, " ");
     if (name && name.trim()) {
       name = name.trim().slice(0, 60);
       document.getElementById("guest").textContent = name;
