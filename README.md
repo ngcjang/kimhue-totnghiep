@@ -1,17 +1,22 @@
 # Thiệp mời tốt nghiệp — Kim Huệ
 
-## Đưa thiệp lên mạng (Netlify, miễn phí)
-1. Vào https://app.netlify.com/drop (đăng nhập bằng Google/GitHub).
-2. Kéo thả cả thư mục `C:\graduation` vào trang.
-3. Vào **Site configuration → Change site name**, gõ ví dụ `kimhue-totnghiep`
-   → link thành `https://kimhue-totnghiep.netlify.app`.
-
-Sửa thiệp xong muốn cập nhật: vào site → tab **Deploys** → kéo thả lại thư mục.
+Link thiệp: https://ngcjang.github.io/kimhue-totnghiep/
 
 ## Link riêng cho từng khách
 Thêm `?to=Tên khách` vào cuối link:
 
-- `https://kimhue-totnghiep.netlify.app/?to=Chị Lan`
-- `https://kimhue-totnghiep.netlify.app/?to=Anh Minh và gia đình`
+- `https://ngcjang.github.io/kimhue-totnghiep/?to=Chị Lan`
+- `https://ngcjang.github.io/kimhue-totnghiep/?to=Anh Minh và gia đình`
 
 Thiệp sẽ hiện "Thân mời Chị Lan…". Không có `?to=` thì hiện "Thân mời bạn".
+
+## Cập nhật thiệp
+Sửa `index.html` xong chạy:
+
+```
+git add -A
+git commit -m "Cập nhật thiệp"
+git push
+```
+
+Khoảng 1 phút sau link sẽ hiện bản mới.
