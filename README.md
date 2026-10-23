@@ -1,22 +1,29 @@
 # Thiệp mời tốt nghiệp — Kim Huệ
 
-Link thiệp: https://ngcjang.github.io/kimhue-totnghiep/
+Link thiệp: https://totnghiepkimhue.netlify.app · https://ngcjang.github.io/kimhue-totnghiep/
 
 ## Link riêng cho từng khách
-Thêm `?to=Tên khách` vào cuối link:
+Thêm `?to=Tên khách` vào cuối link, ví dụ `https://totnghiepkimhue.netlify.app/?to=Chị Lan`.
+Không có `?to=` thì thiệp hiện "Thân mời bạn".
 
-- `https://ngcjang.github.io/kimhue-totnghiep/?to=Chị Lan`
-- `https://ngcjang.github.io/kimhue-totnghiep/?to=Anh Minh và gia đình`
+## Thay ảnh (khi có ảnh pre-graduation)
+Chép ảnh mới **đè lên đúng tên file** trong `assets/photos/`:
 
-Thiệp sẽ hiện "Thân mời Chị Lan…". Không có `?to=` thì hiện "Thân mời bạn".
+| File | Vị trí trên thiệp |
+|---|---|
+| `hero.jpg` | Ảnh chính trong khung vòm — nên dùng ảnh dọc |
+| `album-1.jpg` … `album-6.jpg` | 6 ảnh polaroid ở mục "Thanh xuân của Huệ" |
+| `truong.jpg` | Ảnh trường ở mục Địa điểm |
 
-## Cập nhật thiệp
-Sửa `index.html` xong chạy:
+Ảnh nên thu nhỏ còn khoảng 1000–1400px cạnh dài (dưới ~500 KB) để thiệp mở nhanh trên điện thoại.
 
+## Đưa lên Netlify
+Tab **Deploys** → kéo thả cả thư mục, hoặc chỉ các mục cần thiết: `index.html`, `vo-tay.mp3`, thư mục `assets`.
+Thư mục `img/` chứa ảnh gốc, không cần đưa lên.
+
+## Cập nhật GitHub
 ```
 git add -A
 git commit -m "Cập nhật thiệp"
 git push
 ```
-
-Khoảng 1 phút sau link sẽ hiện bản mới.
